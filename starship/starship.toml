@@ -24,7 +24,7 @@ style = 'bold blue'
 symbol = '󰸏'
 
 [git_branch]
-format = 'on [$symbol$branch(:$remote_name/$remote_branch)]($style) '
+format = 'on [$symbol$branch(➜$remote_name/$remote_branch)]($style) '
 symbol = ' '
 always_show_remote = true
 
