@@ -18,13 +18,13 @@ return {
   end,
   opts = {
     right = {
-      -- {
-      --   ft = "noice",
-      --   size = { height = 0.4 },
-      --   filter = function(_, win)
-      --     return vim.api.nvim_win_get_config(win).relative == ""
-      --   end,
-      -- },
+      {
+        ft = "noice",
+        size = { height = 0.4 },
+        filter = function(_, win)
+          return vim.api.nvim_win_get_config(win).relative == ""
+        end,
+      },
       {
         title = "help",
         ft = "help",
