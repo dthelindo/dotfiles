@@ -35,6 +35,9 @@ return {
     },
   },
   {
+    "svermeulen/text-to-colorscheme.nvim",
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "catppuccin",

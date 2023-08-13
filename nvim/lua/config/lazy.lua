@@ -17,6 +17,16 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "lazyvim.plugins.extras.ui.edgy" },
     { import = "plugins" },
+    { import = "plugins.coding" },
+    { import = "plugins.editor" },
+    { import = "plugins.lang" },
+    { import = "plugins.linting" },
+    { import = "plugins.navigation" },
+    { import = "plugins.terminal" },
+    { import = "plugins.testing" },
+    { import = "plugins.theme" },
+    { import = "plugins.tools" },
+    { import = "plugins.ui" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -27,7 +37,14 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = {
+    colorscheme = {
+      "tokyonight",
+      "habamax",
+      "catpuccin",
+    },
+    missing = true,
+  },
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
