@@ -1,5 +1,5 @@
 local builtin = require("telescope.builtin")
-require("telescope").load_extension("neoclip")
+-- require("telescope").load_extension("neoclip")
 
 return {
   {
@@ -57,11 +57,11 @@ return {
         "<cmd>Noice telescope<cr>",
         desc = "Find Messages",
       },
-      {
-        "<leader>o",
-        "<cmd>Telescope neoclip<cr>",
-        desc = "Find clipboard",
-      },
+      -- {
+      --   "<leader>o",
+      --   "<cmd>Telescope neoclip<cr>",
+      --   desc = "Find clipboard",
+      -- },
     },
     -- change some options
     opts = {
