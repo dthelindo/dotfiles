@@ -1,7 +1,7 @@
 return {
-  {
-    "f-person/git-blame.nvim",
-  },
+  -- {
+  --   "f-person/git-blame.nvim",
+  -- },
   {
     "lewis6991/gitsigns.nvim",
     opts = {

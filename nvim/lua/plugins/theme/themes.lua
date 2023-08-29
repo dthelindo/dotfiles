@@ -38,6 +38,9 @@ return {
     "svermeulen/text-to-colorscheme.nvim",
   },
   {
+    "sainnhe/everforest",
+  },
+  {
     "LazyVim/LazyVim",
     opts = {
       colorscheme = "catppuccin",
