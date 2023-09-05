@@ -17,6 +17,7 @@ local plugins = {
   require "custom.tools.lazygit".spec,
   require "custom.tools.vim-illuminate".spec,
   require "custom.tools.persistence".spec,
+  require "custom.tools.lazy".spec,
 
   require "custom.ui.noice".spec,
   require "custom.ui.nvim-tree".spec,

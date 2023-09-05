@@ -28,7 +28,17 @@ M.spec = {
         "golangci-lint",
       },
     },
+    keys = {
+      {"<leader>cm", "<cmd> Mason <cr>", desc = "Open Mason"}
+    }
   },
+}
+
+M.mappings = {
+  n = {
+    -- NOTE: this overrides defaiult "Git commits" telescope mapping
+    ["<leader>cm"] = {"<cmd> Mason <cr>", "Open Mason"}
+  }
 }
 
 return M
