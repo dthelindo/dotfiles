@@ -32,5 +32,6 @@ M.flash = require "custom.coding.flash".mappings
 M.trouble = require "custom.coding.trouble".mappings
 M.session = require "custom.tools.persistence".mappings
 M.mason = require "custom.tools.mason".mappings
+M.executor = require "custom.tools.executor".mappings
 
 return M
