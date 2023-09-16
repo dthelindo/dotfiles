@@ -27,6 +27,7 @@ local plugins = {
   require "custom.ui.notify".spec,
 
   require "custom.editor.mini".spec,
+  require "custom.editor.oil".spec,
 
   require "custom.lang.go".spec,
 
