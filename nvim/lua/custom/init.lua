@@ -9,13 +9,6 @@
 vim.wo.relativenumber = true
 
 --require "plugins"
---vim.notify = require("notify")
-
-function test_notify()
-  require("notify")("test")
-end
-
-vim.cmd("command! TestNotify lua test_notify()")
 
 local function augroup(name)
   return vim.api.nvim_create_augroup("custom_augroup_" .. name, { clear = true })

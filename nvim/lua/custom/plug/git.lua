@@ -1,6 +1,19 @@
+
 local M = {}
 
+-- local gitsigns_bar = '▌'
+--
+-- local gitsigns_hl_pool = {
+-- 	GitSignsAdd          = "DiagnosticOk",
+-- 	GitSignsChange       = "DiagnosticWarn",
+-- 	GitSignsChangedelete = "DiagnosticWarn",
+-- 	GitSignsDelete       = "DiagnosticError",
+-- 	GitSignsTopdelete    = "DiagnosticError",
+-- 	GitSignsUntracked    = "NonText",
+-- }
+
 M.spec = {
+  -- INFO: Sign column git decorations and git tools
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPre", "BufNewFile" },
@@ -8,8 +21,8 @@ M.spec = {
       signs = {
         add = { text = "▎" },
         change = { text = "▎" },
-        delete = { text = "" },
-        topdelete = { text = "" },
+        delete = { text = "▎" },
+        topdelete = { text = "▎" },
         changedelete = { text = "▎" },
         untracked = { text = "▎" },
       },
@@ -33,9 +46,27 @@ M.spec = {
         map("n", "<leader>ghd", gs.diffthis, "Diff This")
         map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+
+        vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = "Red" })
+        vim.api.nvim_set_hl(0, "GitSignsTopdelete", { fg = "Red" })
+        vim.api.nvim_set_hl(0, "GitSignsChange", { fg = "Orange" })
+        vim.api.nvim_set_hl(0, "GitSignsChangedelete", { fg = "Orange" })
       end,
     },
-  }
+  },
+
+  -- INFO: Lazygit UI
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = false,
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    keys = {
+      {"<leader>gg", "<cmd> LazyGit <cr>", desc = "Open LazyGit"},
+    }
+  },
 }
 
 return M

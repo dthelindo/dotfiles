@@ -6,6 +6,7 @@ local M = {}
 
 M.ui = {
   theme = "catppuccin",
+  tabufline = "",
   theme_toggle = { "catppuccin", "one_light" },
 
   -- hl_override = highlights.override,
