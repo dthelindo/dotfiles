@@ -27,9 +27,12 @@ M.spec = {
         "nvim-telescope/telescope-live-grep-args.nvim" ,
         version = "^1.0.0",
       },
+      {
+        "nvim-telescope/telescope-file-browser.nvim",
+      }
     },
     opts = {
-      extensions_list = {"themes", "terms", "live_grep_args", "harpoon"},
+      extensions_list = {"themes", "terms", "live_grep_args", "harpoon", "fzf", "file_browser"},
       extensions = {
         fzf = {
           fuzzy = true,
@@ -43,6 +46,9 @@ M.spec = {
               ["1"] = function() require("harpoon.ui").nav_file(1) end,
             }
           }
+        },
+        file_browser = {
+          hijack_netrw = true,
         }
       },
       pickers = {
