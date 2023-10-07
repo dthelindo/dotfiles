@@ -7,17 +7,29 @@ M.spec = {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        "lua-language-server",
-        "stylua",
-        "css-lsp",
-        "html-lsp",
-        "typescript-language-server",
-        "prettier",
+        -- golang
         "gopls",
         "delve",
-        "gofumpt",
-        "goimports",
         "golangci-lint",
+        "gofmt",
+        "goimports",
+        "goimports_reviser",
+        "golines",
+        "gomodifytags",
+        "impl",
+
+        -- typescript, javascript
+        "typescript-language-server",
+        "prettier",
+        "eslint_d",
+
+        -- lua
+        "lua-language-server",
+        "stylua",
+
+        -- misc
+        "buf",
+        "cfn-lint",
       },
     },
     keys = {
@@ -46,17 +58,56 @@ M.spec = {
     },
     opts = function ()
       local nls = require "null-ls"
+      local diagnostics = nls.builtins.diagnostics
+      local formatting = nls.builtins.formatting
+      local code_actions = nls.builtins.code_actions
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
       return {
         sources = {
-          nls.builtins.code_actions.eslint_d,
-          nls.builtins.formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
-          nls.builtins.code_actions.gitsigns,
-          nls.builtins.code_actions.gomodifytags,
-          nls.builtins.code_actions.impl,
-          nls.builtins.code_actions.refactoring,
-          nls.builtins.diagnostics.golangci_lint,
-          nls.builtins.formatting.gofmt,
+          -- golang
+          diagnostics.golangci_lint.with({
+            args = {
+              "run",
+              "--fix=true",
+              "--out-format=json",
+            },
+          }),
+          formatting.gofmt,
+          formatting.goimports,
+          formatting.goimports_reviser,
+          formatting.golines,
+          code_actions.gomodifytags,
+          code_actions.impl,
+          -- typescript, javascript
+          formatting.prettier,
+          code_actions.eslint_d,
+          -- lua
+          -- misc
+          diagnostics.buf,
+          diagnostics.cfn_lint,
+          code_actions.gitsigns,
+          code_actions.refactoring,
         },
+        on_attach = function(client, bufnr)
+          -- Autoformat on save
+          if client.supports_method("textDocument/formatting") then
+              vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+              vim.api.nvim_create_autocmd("BufWritePre", {
+                  group = augroup,
+                  buffer = bufnr,
+                  callback = function()
+                      -- on 0.8, you should use vim.lsp.buf.format({ bufnr = bufnr }) instead
+                      -- on later neovim version, you should use vim.lsp.buf.format({ async = false }) instead
+                      vim.lsp.buf.format({
+                        async = false ,
+                        filter = function ()
+                          return client.name == "null-ls"
+                        end
+                      })
+                  end,
+              })
+          end
+        end,
         debug = true,
       }
     end
