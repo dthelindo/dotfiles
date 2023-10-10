@@ -1,21 +1,13 @@
--- local autocmd = vim.api.nvim_create_autocmd
-
--- Auto resize panes when resizing nvim window
--- autocmd("VimResized", {
---   pattern = "*",
---   command = "tabdo wincmd =",
--- })
-
-vim.wo.relativenumber = true
-
---require "plugins"
-
+local autocmd = vim.api.nvim_create_autocmd
 local function augroup(name)
   return vim.api.nvim_create_augroup("custom_augroup_" .. name, { clear = true })
 end
 
+vim.wo.relativenumber = true
+
+
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
   group = augroup("highlight_yank"),
   callback = function()
     vim.highlight.on_yank()
@@ -23,7 +15,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- resize splits if window got resized
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+autocmd({ "VimResized" }, {
   group = augroup("resize_splits"),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
@@ -33,7 +25,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 })
 
 -- go to last loc when opening a buffer
-vim.api.nvim_create_autocmd("BufReadPost", {
+autocmd("BufReadPost", {
   group = augroup("last_loc"),
   callback = function()
     local exclude = { "gitcommit" }
@@ -50,7 +42,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- close some filetypes with <q>
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
   group = augroup("close_with_q"),
   pattern = {
     "PlenaryTestPopup",
@@ -74,7 +66,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- wrap and check for spell in text filetypes
-vim.api.nvim_create_autocmd("FileType", {
+autocmd("FileType", {
   group = augroup("wrap_spell"),
   pattern = { "gitcommit", "markdown" },
   callback = function()
@@ -84,7 +76,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+autocmd({ "BufWritePre" }, {
   group = augroup("auto_create_dir"),
   callback = function(event)
     if event.match:match("^%w%w+://") then
@@ -94,3 +86,10 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+-- INFO: Edgy plugin recommendations
+-- views can only be fully collapsed with the global statusline
+vim.opt.laststatus = 3
+-- Default splitting will cause your main splits to jump when opening an edgebar.
+-- To prevent this, set `splitkeep` to either `screen` or `topline`.
+vim.opt.splitkeep = "screen"
