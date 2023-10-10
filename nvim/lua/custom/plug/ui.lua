@@ -44,10 +44,10 @@ M.spec = {
     opts = {
       lsp = {
         hover = {
-          enabled = false,
+          enabled = true,
         },
         signature = {
-          enabled = false,
+          enabled = true,
         },
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
@@ -73,52 +73,23 @@ M.spec = {
           },
         },
       },
+      messages = {
+        enabled = false,
+      },
     },
   },
 
-  -- INFO: Tree filer browser
+  -- INFO: Symbols tree
   {
-    "nvim-tree/nvim-tree.lua",
-    opts = {
-      view = {
-          float = {
-            enable = true,
-            open_win_config = function()
-              local screen_w = vim.opt.columns:get()
-              local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
-              local window_w = screen_w * 0.5
-              local window_h = screen_h * 0.5
-              local window_w_int = math.floor(window_w)
-              local window_h_int = math.floor(window_h)
-              local center_x = (screen_w - window_w) / 2
-              local center_y = ((vim.opt.lines:get() - window_h) / 2)
-                               - vim.opt.cmdheight:get()
-              return {
-                border = 'rounded',
-                relative = 'editor',
-                row = center_y,
-                col = center_x,
-                width = window_w_int,
-                height = window_h_int,
-              }
-            end,
-          },
-        width = function()
-          return math.floor(vim.opt.columns:get() * 0.5)
-        end,
-      },
-      git = {
-        enable = true,
-      },
-      renderer = {
-        highlight_git = true,
-        icons = {
-          show = {
-            git = true,
-          },
-        },
-      },
-    },
+    "simrat39/symbols-outline.nvim",
+    cmd = "SymbolsOutline",
+    opts = {},
+  },
+
+  -- INFO: Better VIM UI
+  {
+    "stevearc/dressing.nvim",
+    lazy = false,
   },
 
   -- INFO: Diagnostics, References, Telescope, Quickfix, Loclist UI
@@ -180,6 +151,112 @@ M.spec = {
       {"[t", function() require("todo-comments").jump_prev() end, desc = "Jump to prev todo"},
       {"<leader>st", "<cmd> TodoTelescope <cr>", desc = "Search todos"},
     }
+  },
+
+  -- INFO: Preconfigured window layouts
+  {
+    "folke/edgy.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>ue", function() require("edgy").toggle() end, desc = "Edgy Toggle" },
+      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" },
+    },
+    opts = {
+      left = {
+        {
+          title = "Files",
+          ft = "neo-tree",
+          filter = function(buf)
+            return vim.b[buf].neo_tree_source == "filesystem"
+          end,
+          pinned = true,
+          open = function()
+            vim.api.nvim_input("<esc><space>e")
+          end,
+          size = { height = 0.5 },
+        },
+        {
+          title = "Buffers",
+          -- TODO: filter for empty buffers
+          ft = "neo-tree",
+          filter = function(buf)
+            return vim.b[buf].neo_tree_source == "buffers"
+          end,
+          pinned = true,
+          open = "Neotree position=top buffers",
+        },
+        {
+          title = "Tests",
+          ft = "neotest-summary",
+          pinned = true,
+        },
+        {
+          title = "Symbols",
+          ft = "Outline",
+          pinned = true,
+          open = "SymbolsOutlineOpen",
+        },
+        {
+          title = "Trouble",
+          ft = "Trouble",
+          pinned = true,
+          open = "Trouble",
+          size = { height = 0.3 },
+        }
+      },
+    },
+  },
+
+  -- INFO: File tree
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    cmd = "Neotree",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+    },
+    keys = {
+      { "<leader>fe", "NeoTree", desc = "Open Neotree" },
+    },
+    deactivate = function()
+      vim.cmd([[Neotree close]])
+    end,
+    init = function()
+      if vim.fn.argc() == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("neo-tree")
+        end
+      end
+    end,
+    opts = {
+      sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+      open_files_do_not_replace_types = { "terminal", "Trouble", "qf", "Outline" },
+      filesystem = {
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
+        use_libuv_file_watcher = true,
+        filtered_items = {
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        }
+      },
+      window = {
+        mappings = {
+          ["<space>"] = "none",
+        },
+      },
+      default_component_configs = {
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
+      },
+    },
   },
 }
 

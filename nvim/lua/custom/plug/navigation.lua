@@ -27,9 +27,7 @@ M.spec = {
         "nvim-telescope/telescope-live-grep-args.nvim" ,
         version = "^1.0.0",
       },
-      {
-        "nvim-telescope/telescope-file-browser.nvim",
-      }
+      "nvim-telescope/telescope-file-browser.nvim",
     },
     opts = {
       extensions_list = {"themes", "terms", "live_grep_args", "harpoon", "fzf", "file_browser"},
@@ -49,7 +47,7 @@ M.spec = {
         },
         file_browser = {
           hijack_netrw = true,
-        }
+        },
       },
       pickers = {
         buffers = {
