@@ -57,6 +57,20 @@ M.spec = {
     },
   },
 
+  -- INFO: Terminal
+  {
+    "akinsho/toggleterm.nvim",
+    event = "BufEnter",
+    version = "*",
+    opts = {
+      open_mapping = [[<c-\>]],
+    },
+    keys = {
+      { "<leader>ts", "<cmd>TermSelect<cr>", desc = "Select Terminal" },
+      { "<leader>tr", "<cmd>ToggleTermSetName<cr>", desc = "Rename Terminal" },
+    }
+  },
+
   -- INFO: Mini
   { 'echasnovski/mini.nvim', version = false },
   {

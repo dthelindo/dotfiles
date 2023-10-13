@@ -73,9 +73,6 @@ M.spec = {
           },
         },
       },
-      messages = {
-        enabled = false,
-      },
     },
   },
 
@@ -204,6 +201,18 @@ M.spec = {
           size = { height = 0.3 },
         }
       },
+      right = {
+        {
+          title = "Terminal",
+          ft = "toggleterm",
+          size = { width = 0.3 },
+        },
+        {
+          title = "Test Output",
+          ft = "neotest-output-panel",
+          size = { width = 0.3 },
+        }
+      }
     },
   },
 

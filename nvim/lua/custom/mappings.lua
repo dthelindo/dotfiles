@@ -35,5 +35,7 @@ M.lazy = {
 -- M.mason = require "custom.tools.mason".mappings
 --M.executor = require "custom.tools.executor".mappings
 M.navigation = require "custom.plug.navigation".mappings
+M.test = require "custom.plug.test".mappings
+M.Go = require "custom.go".mappings
 
 return M

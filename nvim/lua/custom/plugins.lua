@@ -1,9 +1,6 @@
 ---@type NvPluginSpec[]
 local plugins = {
 
-  -- TODO: create null-ls plugin spec
-  -- require "custom.configs.null-ls",
-
   require "custom.plug.ui".spec,
   require "custom.plug.lsp".spec,
   require "custom.plug.dap".spec,
@@ -12,6 +9,7 @@ local plugins = {
   require "custom.plug.navigation".spec,
   require "custom.plug.lazy".spec,
   require "custom.plug.tools".spec,
+  require "custom.go".spec
 }
 
 return plugins
