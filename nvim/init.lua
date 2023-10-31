@@ -125,6 +125,11 @@ require('lazy').setup({
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
 
+  -- UI Updates
+  {
+    'stevearc/dressing.nvim',
+    opts = {},
+  },
   -- Better UI components
   {
     "folke/noice.nvim",
@@ -291,6 +296,7 @@ require('lazy').setup({
   },
 
   { import = 'plugins.lspconfig' },
+  { import = 'plugins.runners' },
   { import = 'plugins.dap' },
   { import = 'plugins.test' },
   { import = 'plugins.git' },
